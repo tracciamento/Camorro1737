@@ -6,12 +6,26 @@ def c(text, code):
 
 class R:
     def __init__(self, target):
-        self.target = target; self.finds = []; self.lines = []
-    def good(self, m):  self.lines.append(("info", m));  print(c("[*]", "1;36") + " " + m)
-    def info(self, m):  self.lines.append(("info", m));  print(c("[*]", "1;36") + " " + m)
-    def warn(self, m):  self.lines.append(("warn", m));  print(c("[!]", "1;33") + " " + m)
-    def vuln(self, m):  self.finds.append(m); self.lines.append(("vuln", m))
-                        print(c("[VULN]", "1;31") + " " + m)
+        self.target = target
+        self.finds = []
+        self.lines = []
+
+    def good(self, m):  
+        self.lines.append(("info", m))
+        print(c("[*]", "1;36") + " " + m)
+
+    def info(self, m):  
+        self.lines.append(("info", m))
+        print(c("[*]", "1;36") + " " + m)
+
+    def warn(self, m):  
+        self.lines.append(("warn", m))
+        print(c("[!]", "1;33") + " " + m)
+
+    def vuln(self, m):  
+        self.finds.append(m)
+        self.lines.append(("vuln", m))
+        print(c("[VULN]", "1;31") + " " + m)
 
 def norm_target(t):
     if not t.startswith(("http://", "https://")):
@@ -29,7 +43,9 @@ def load_list(path):
 def get_params(url):
     return [k for k, _ in urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)]
 
-def b64e(b):  return base64.b64encode(b).decode()
+def b64e(b):  
+    return base64.b64encode(b).decode()
+
 def b64d(s):
     s += "=" * (-len(s) % 4)
     return base64.b64decode(s)
